@@ -57,6 +57,7 @@
             // 
             // m_textBoxProjectPath
             // 
+            this.m_textBoxProjectPath.AllowDrop = true;
             this.m_textBoxProjectPath.Cursor = System.Windows.Forms.Cursors.Hand;
             this.m_textBoxProjectPath.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.m_textBoxProjectPath.Location = new System.Drawing.Point(12, 301);
@@ -65,6 +66,8 @@
             this.m_textBoxProjectPath.Size = new System.Drawing.Size(468, 25);
             this.m_textBoxProjectPath.TabIndex = 6;
             this.m_textBoxProjectPath.Click += new System.EventHandler(this.m_textBoxProjectPath_Click);
+            this.m_textBoxProjectPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.m_textBoxProjectPath_DragDrop);
+            this.m_textBoxProjectPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.m_textBoxProjectPath_DragEnter);
             // 
             // m_textBoxOutputPath
             // 
@@ -164,9 +167,9 @@
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.label5.Location = new System.Drawing.Point(9, 274);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 17);
+            this.label5.Size = new System.Drawing.Size(201, 17);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Select Project File :";
+            this.label5.Text = "Select Project File (You can drag):";
             // 
             // m_buttonPublish
             // 

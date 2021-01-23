@@ -80,15 +80,17 @@ namespace DotnetCoreAdvancedPublisher
                 m_buttonPublish.Text = "Publishing...";
                 try
                 {
-                    bool isSelfContained = m_comboBoxPublishType.Text == "Self-Contained" ? true : false; 
-                    
+                    bool isSelfContained = m_comboBoxPublishType.Text == "Self-Contained" ? true : false;
+
+                    bool isTrimmer = m_checkBoxPublishTrimmer.Enabled == false ? false : m_checkBoxPublishTrimmer.Checked;
+
                     Publisher.Execute(
                         workingDictory,
                         isSelfContained,
                         m_checkBoxReadyToRun.Checked,
                         m_checkBoxSingleFile.Checked,
-                        m_checkBoxPublishTrimmer.Checked,
-                        rid, 
+                        isTrimmer,
+                        rid,
                         outputPath);
 
                     Properties.Settings.Default.ProjectPath = m_textBoxProjectPath.Text;
@@ -165,7 +167,7 @@ namespace DotnetCoreAdvancedPublisher
 
             if (result == DialogResult.OK)
             {
-                var prefix = "publish_"+ Path.GetFileNameWithoutExtension(m_textBoxProjectPath.Text) + "_" + m_comboBoxRID.Text;
+                var prefix = "publish_" + Path.GetFileNameWithoutExtension(m_textBoxProjectPath.Text) + "_" + m_comboBoxRID.Text;
 
                 m_textBoxOutputPath.Text = m_fbdOutputFolder.SelectedPath;
             }
@@ -187,6 +189,31 @@ namespace DotnetCoreAdvancedPublisher
         private void m_pictureBoxGithubLink_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/caglargul52/dotnetcore-advanced-publisher");
+        }
+
+        private void m_textBoxProjectPath_DragEnter(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files.Length == 1)
+            {
+                if (Path.GetExtension(files[0])?.ToLower() == ".csproj")
+                {
+                    if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                        e.Effect = DragDropEffects.Copy;
+
+                    return;
+                }
+            }
+
+            e.Effect = DragDropEffects.None;
+        }
+
+        private void m_textBoxProjectPath_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            m_textBoxProjectPath.Text = files[0];
         }
     }
 }
