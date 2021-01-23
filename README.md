@@ -1,2 +1,2 @@
-# dotnetcore-advanced-publisher
-.NET Core Advanced Publisher
+# .NET Core Advanced Publisher
+It was prepared using .NET Core CLI.
