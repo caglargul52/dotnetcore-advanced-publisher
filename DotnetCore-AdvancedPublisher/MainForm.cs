@@ -163,6 +163,12 @@ namespace DotnetCoreAdvancedPublisher
                 return;
             }
 
+            if (m_textBoxOutputPath.Text.Contains(" "))
+            {
+                MessageBox.Show(@"There cannot be a space character in the folder path!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult result = m_fbdOutputFolder.ShowDialog();
 
             if (result == DialogResult.OK)
